@@ -115,6 +115,23 @@ p {
   width: 70px;
   height: 70px;
 }
+.loading__spinner {
+  position: absolute;
+  border: solid 1px #99E2D0;
+  box-sizing: border-box;
+  animation: 2.5s spin ease infinite;
+}
+
+.loading__spinner:nth-of-type(1) {
+  animation-delay: 0.2s;
+  width: 30px;
+  height: 30px;
+}
+.loading__spinner:nth-of-type(2) {
+  animation-delay: 0.4s;
+  width: 50px;
+  height: 50px;
+}
 
 
 .header {
