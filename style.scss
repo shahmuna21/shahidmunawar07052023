@@ -1,0 +1,577 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+
+// Variables
+$lightGray: #F6F6F6;
+$gray: #7E7E7E;
+$darkGray: #353535;
+$lightPurple: #F5EDFF;
+$purple: #9356dc;
+$pink: #ff79da;
+$mint: #99E2D0;
+
+// Styles basiques
+body{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+h1,h2,h3,p{
+    margin: 0;
+}
+
+h1,h2{
+    font-size: 25px;
+    font-weight: 900;
+}
+
+p{
+    font-size: 16px;
+    font-weight: 300;
+}
+
+// Elements
+.button{
+    display: block;
+    width: max-content;
+    padding: 16px 22px;
+    background: linear-gradient(350deg, $purple 0%, $pink 100%);
+    border-radius: 1000px; // Bordure énorme pour garantir l'effet bouton pile
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 3px 5px rgb(0 0 0/.2);
+
+    &:hover{
+        filter: brightness(1.1);
+        box-shadow: 0 3px 5px rgb(0 0 0/.4), 0 0 2px rgb(0 0 0/.4);
+    }
+}
+
+.like{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+
+    i:nth-child(1){
+        position: absolute;
+        font-weight: bold;
+        display: none;
+        background: linear-gradient(0deg, $pink 0%, $purple 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    &:hover,&:focus{
+        i:nth-child(1){
+            display: block;
+            animation: .3s like;
+        }
+    }
+
+    i:nth-child(2){
+        position: relative;
+    }
+}
+
+.textCard{
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 10px 8px 2px rgb(0 0 0/.05),
+                0 0 16px rgb(0 0 0/.1);
+    
+    &__title{
+        padding: 0 0 8px;
+    }
+
+}
+
+.loading{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: $purple;
+    animation: .5s fadeOut 3s forwards;
+
+    &__container{
+        height: 300px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    &__subtitle{
+        color: $mint;
+    }
+
+    &__dot{
+        animation: 1s loadingDot linear infinite;
+
+        @for $i from 1 through 3 {
+            &:nth-of-type(#{$i}) {
+                animation-delay: $i * .2s;
+                width:  10px + $i * 20px;
+                height: 10px + $i * 20px;
+            }
+        }
+    }
+
+    &__spinner{
+        position: absolute;
+        border: solid 1px $mint;
+        box-sizing: border-box;
+        animation: 2.5s spin ease infinite;
+
+        @for $i from 1 through 3{
+            &:nth-of-type(#{$i}) {
+                animation-delay: $i * .2s;
+                width:  10px + $i * 20px;
+                height: 10px + $i * 20px;
+            }
+        }
+    }
+}
+
+// Blocs
+.header{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    box-shadow: 0 0 10px rgb(0 0 0/.5);
+
+    &__back{
+        position: absolute;
+        left: 25px;
+        height: 32px;
+        width: 32px;
+        color: $darkGray;
+        line-height: 32px;
+        text-align: center;
+        font-size: 22px;
+    }
+
+    &__logo{
+        height: 32px;
+    }
+}
+
+.footer{
+    padding: 30px 25px;
+    background: $darkGray;
+    color: white;
+
+    &__title{
+        font-family: 'Shrikhand', cursive;
+        font-weight: 100;
+        margin: 0 0 20px;
+    }
+
+    &__link{
+        display: block;
+        margin: 0 0 12px;
+        text-decoration: none;
+        color: white;
+
+        &:hover{
+            color: $lightPurple;
+        }
+
+        i{
+            width: 12px;
+            padding: 0 10px 0 0;
+            text-align: center;
+            font-size: 12px;
+        }
+    }
+}
+
+// Accueil
+.location{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: #EAEAEA;
+    color: $darkGray;
+
+    &__text{
+        position: relative;
+        padding: 0 20px;
+        font-weight: 500;
+        font-size: inherit;
+
+        i{
+            position: absolute;
+            right: 100%;
+        }
+    }
+}
+
+.reservation{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px 0;
+    background: $lightGray;
+    text-align: center;
+
+    &__subtitle{
+        margin: 16px 0;
+    }
+
+    &__button{
+        @extend .button;
+        margin: 8px auto;
+    }
+}
+
+.howItWorks{
+    padding: 50px 25px;
+
+    &__title{
+        margin: 0 0 32px;
+    }
+
+    &__textCard{
+        @extend .textCard;
+        position: relative;
+        margin: 0 0 20px 10px;
+        padding: 32px;
+        background: $lightGray;
+        font-weight: 500; 
+
+        i{
+            color: $gray;
+            padding: 0 20px 0 0;
+        }
+
+        &:hover{
+            background: $lightPurple;
+
+            i{
+                color: $purple;
+            }
+        }
+
+        &::before{
+            position: absolute;
+            left: 0;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            transform: translateX(-50%);
+            padding: 4px;
+            border-radius: 50%;
+            background: $purple;
+            color: white;
+            text-align: center;
+        }
+
+        @for $i from 1 through 3 {
+            &:nth-of-type(#{$i})::before { content: "#{$i}"; }
+        }
+    }
+}
+
+.restaurantMenu{
+    padding: 60px 25px;
+    background: $lightGray;
+
+    &__title{
+        margin: 0 0 32px;
+    }
+    
+    &__grid{
+        display: grid;
+        grid-auto-rows: 280px;
+    }
+}
+
+.menuCard{
+    position: relative;
+    margin: 0 0 25px 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 8px 2px rgb(0 0 0/.05),
+                0 0 16px rgb(0 0 0/.1);
+    overflow: hidden;
+    transition: .2s;
+
+    &:hover{
+        box-shadow: 0 10px 8px 2px rgb(0 0 0/.2),
+        0 0 16px rgb(0 0 0/.3);
+    }
+
+    &:nth-of-type(2) img{
+        object-position: 0 40%;
+    }
+
+    a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__content{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__body{
+        padding: 16px;
+    }
+
+    &__title{
+        margin: 0 0 4px;
+    }
+
+    .like{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 16px 16px 30px;
+    }
+
+    &--new{
+        @extend .menuCard;
+        position: relative;
+
+        &::after{
+            content: "Nouveau";
+            position: absolute;
+            pointer-events: none;
+            top: 16px;
+            right: 16px;
+            padding: 5px 10px;
+            background: $mint;
+            color: #008766;
+            border-radius: 3px;
+        }
+    }
+}
+
+// Menus
+.menuImg{
+    width: 100%;
+    height: 300px;
+    margin: 0 0 -55px;
+    object-fit: cover;
+}
+
+.menuContainer{
+    position: relative;
+    padding: 30px 14px;
+    background: $lightGray;
+    border-radius: 40px 40px 0 0;
+
+    &__title{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 8px;
+
+        h1{
+            font-family: 'Shrikhand', cursive;
+            font-weight: 100;
+        }
+    }
+
+    &__button{
+        @extend .button;
+        margin: 50px auto;
+        padding: 16px 50px;
+    }
+}
+
+.dishes{
+    margin: 40px 0 0;
+
+    &__title{
+        position: relative;
+        margin: 0 8px 30px;
+        font-size: 20px;
+        font-weight: 300;
+
+        &::after{
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            display: block;
+            background: $mint;
+            width: 50px;
+            height: 4px;  
+        }
+    }
+
+    &__textCard{
+        @extend .textCard;
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        margin: 0 0 20px;
+        overflow: hidden;
+        opacity: 0;
+
+        @for $i from 1 through 10 {
+            &:nth-of-type(#{$i}) {
+                animation: 1s fadeIn 0.5 + $i * 0.2s;
+                animation-fill-mode: forwards;
+            }
+        }
+
+        &__title{
+            margin: 0 0 4px;
+        }
+
+        &__text{
+            padding: 16px 0 16px 16px;
+            white-space: nowrap;
+            overflow: hidden;
+
+            *{
+                letter-spacing: -0.5px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+
+        &__price{
+            margin: auto 0 0 auto;
+            padding: 16px;
+        }
+
+        &__addToCard{
+            transition: .5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 -65px 0 0;
+            min-width: 65px;
+            background: $mint;
+            font-size: 24px;
+
+            i{
+                transition: .5s;
+                transform: rotate(0);
+                color: white;
+            }
+        }
+
+        &:hover &__addToCard,&:focus &__addToCard{
+            margin: 0;
+
+            i{
+                transform: rotate(360deg);
+            }
+        }
+    }
+}
+
+// Media queries
+
+@media(min-width:768px){
+    .reservation,.howItWorks,.restaurantMenu,.menuContainer,.footer{
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+
+    .menuImg{
+        height: 500px;
+        margin: 0 0 -150px;
+    }
+
+    .menuContainer{
+        padding-top: 100px;
+        border-radius: 100px 100px 0 0;
+    }
+}
+
+@media(min-width:992px){
+    .restaurantMenu__grid {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 25px;
+    }
+}
+
+@media(min-width:1400px){
+    .reservation,.howItWorks,.restaurantMenu,.menuContainer,.footer{
+        padding-left: 400px;
+        padding-right: 400px;
+    }
+}
+
+// Animations
+@keyframes like {
+    0%{
+        clip-path: inset(100% 0 0 0);
+    }
+    100%{
+        clip-path: inset(0);
+    }
+}
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        z-index: -1;
+    }
+}
+
+@keyframes loadingDot {
+    0%,49%{
+        opacity: 0;
+    }
+    50%,100%{
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0%{
+        transform: rotate(0) scale(1);
+    }
+    50%{
+        transform: rotate(180deg) scale(2);
+    }
+    100%{
+        transform: rotate(360deg) scale(1);
+    }
+}
